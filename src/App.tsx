@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Users from "./pages/Users";
+import UserDetails from "./pages/UserDetails";
 
 import Navbar from "./components/Navbar";
 
@@ -13,6 +14,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/users" element={<Users />}></Route>
+          <Route path="/users/:userId" element={<UserDetails />}></Route>
         </Routes>
       </main>
     </div>

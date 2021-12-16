@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { User, UserService } from "../services/user.service";
 
 export default function Users() {
@@ -27,7 +29,11 @@ export default function Users() {
                 {users.map((user, i) => (
                   <tr key={i}>
                     <th scope="row">{user.id}</th>
-                    <td>{user.name}</td>
+                    <td>
+                      <Link to={"/users/" + user.id}>
+                        {user.name}
+                      </Link>
+                    </td>
                     <td>{user.username}</td>
                     <td>{user.email}</td>
                   </tr>

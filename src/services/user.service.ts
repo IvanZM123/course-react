@@ -1,23 +1,5 @@
-export interface Query {
-  [key: string]: any;
-}
-
-export interface Address extends Query {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: {
-    lat: string;
-    lng: string;
-  };
-}
-
-export interface Company extends Query {
-  name: string;
-  catchPhrase: string;
-  bs: string;
-}
+import { Address, Company, Query } from "../declarations";
+import { generateURL } from "../utils";
 
 export interface User extends Query {
   id: number;
@@ -33,8 +15,15 @@ export interface User extends Query {
 export class UserService {
   private readonly url: string = "https://jsonplaceholder.typicode.com/users";
 
+  async get(id: string): Promise<User> {
+    const url: string = `${this.url}/${id}`;
+    const res = await fetch(url);
+    return res.json();
+  }
+
   async list(query: Query = {}): Promise<User[]> {
-    const res = await fetch(this.url);
+    const url: string = generateURL(this.url, query);
+    const res = await fetch(url);
     return res.json();
   }
 }
