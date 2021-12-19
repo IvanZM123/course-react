@@ -1,20 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Users from "./pages/Users";
-import UserDetails from "./pages/UserDetails";
-
-import Navbar from "./components/Navbar";
+import CreateNote from "./pages/CreateNote";
 
 export default function App() {
   return (
     <div>
-      <Navbar></Navbar>
+      {/* <Navbar></Navbar> */}
       <main className="py-3">
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/users" element={<Users />}></Route>
-          <Route path="/users/:userId" element={<UserDetails />}></Route>
+          <Route path="/new" element={<CreateNote />}></Route>
         </Routes>
       </main>
     </div>

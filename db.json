@@ -1,3 +1,19 @@
 {
-  "users": []
+  "notes": [
+    {
+      "id": 1,
+      "title": "Docker",
+      "description": "It a beautiful platform"
+    },
+    {
+      "title": "RabbitMQ",
+      "description": "The best message broker",
+      "id": 2
+    },
+    {
+      "title": "Microservices",
+      "description": "I have learn microservices.",
+      "id": 3
+    }
+  ]
 }

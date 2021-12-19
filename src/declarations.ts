@@ -18,3 +18,11 @@ export interface Company extends Query {
   catchPhrase: string;
   bs: string;
 }
+
+export type Id = string | number;
+
+export interface ServiceMethods<T> {
+  create(data: T, query?: Query): Promise<T>;
+  list(query?: Query): Promise<T[]>;
+  get(id: Id, query?: Query): Promise<T>;
+}
