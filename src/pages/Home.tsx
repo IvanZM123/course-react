@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import { Note, NoteService } from "../services/notes.service";
+
+import NoteComponent from "../components/Note";
 
 export default function Home() {
 
@@ -36,12 +39,7 @@ export default function Home() {
                 <div className="row">
                   {notes.map((item, i) => (
                     <div className="col-12 col-md-6 p-3" key={i}>
-                      <div className="card bg-white">
-                        <div className="card-body">
-                          <h4><strong>{item.title}</strong></h4>
-                          <p className="m-0 text-muted">{item.description}</p>
-                        </div>
-                      </div>
+                      <NoteComponent note={item}></NoteComponent>
                     </div>
                   ))}
                 </div>
