@@ -1,13 +1,15 @@
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 
 import { Id } from "../declarations";
 
 import { Note, NoteService } from "../services/notes.service";
+import { GlobalContext } from "../context/NoteContext";
 
 export default function EditNote() {
   const { register, handleSubmit, reset, setValue } = useForm();
+  const { getOne, updateOne } = useContext(GlobalContext);
   const { id } = useParams();
 
   const onSubmit = (data: Note) => {
@@ -16,20 +18,26 @@ export default function EditNote() {
     reset({ title: "", description: "" });
 
     noteService.update(data.id, data)
-      .then(console.log)
+      .then((note) => { updateOne(note.id, note) })
       .catch(console.error);
   }
 
+  function setNote(note: Note): void {
+    Object.keys(note).forEach((key) => {
+      setValue(key, note[key as keyof Note]);
+    });
+  }
+
   useEffect(() => {
+    const note = getOne(id as Id);
+    if (note) return setNote(note);
+
     const noteService = new NoteService();
+    
     noteService.get(id as Id)
-      .then((note) => {
-        Object.keys(note).forEach((key) => {
-          setValue(key, note[key as keyof Note]);
-        });
-      })
+      .then(setNote)
       .catch(console.error);
-  }, [id, setValue]);
+  }, [id, setValue, setNote, getOne]);
 
   return (
     <div className="EditNote">
@@ -68,7 +76,7 @@ export default function EditNote() {
                     <button
                       type="submit"
                       className="btn btn-primary mx-2 border-0 py-2 px-3"
-                    >Create</button>
+                    >Update</button>
                   </div>
                 </form>
               </div>

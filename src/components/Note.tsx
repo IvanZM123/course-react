@@ -1,20 +1,24 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Id } from "../declarations";
 import { Note, NoteService } from "../services/notes.service";
+
+import { GlobalContext } from "../context/NoteContext";
 
 interface NoteProps {
   note: Partial<Note>;
 }
 
 export default function NoteComponent({ note }: NoteProps) {
-  const noteService= new NoteService();
+  const noteService = new NoteService();
+  const { removeOne } = useContext(GlobalContext);
 
   const remove = async (id: Id) => {
     try {
       if (!window.confirm("This note will be remove. Are you sure?")) return;
-      const data = await noteService.remove(id);
-      console.log(data);
+      await noteService.remove(id);
+      removeOne(id);
     } catch (error) {
       console.error(error);
     }

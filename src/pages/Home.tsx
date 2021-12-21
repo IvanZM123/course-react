@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { Note, NoteService } from "../services/notes.service";
+import { NoteService } from "../services/notes.service";
+import { GlobalContext } from "../context/NoteContext";
 
 import NoteComponent from "../components/Note";
 
 export default function Home() {
-
-  const [notes, setNotes] = useState<Note[]>([]);
+  const { getMany, addMany } = useContext(GlobalContext);
 
   useEffect(() => {
     const noteService = new NoteService();
     noteService.list()
-      .then(setNotes)
+      .then(addMany)
       .catch(console.error);
   }, []);
 
@@ -23,7 +23,7 @@ export default function Home() {
           <div className="col-12 col-xl-8">
             <div className="card border-0 bg-white br-20">
               <div className="card-header border-0 bg-white d-flex align-items-center mt-3">
-                <h5 className="m-0 text-muted">Total: <strong>{notes.length}</strong></h5>
+                <h5 className="m-0 text-muted">Total: <strong>{getMany().length}</strong></h5>
                 <span className="spacer"></span>
                 <Link to="/new">
                   <button className="btn btn-primary rounded-pill px-3">
@@ -37,7 +37,7 @@ export default function Home() {
 
               <div className="card-body">
                 <div className="row">
-                  {notes.map((item, i) => (
+                  {getMany().map((item, i) => (
                     <div className="col-12 col-md-6 p-3" key={i}>
                       <NoteComponent note={item}></NoteComponent>
                     </div>

@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+
 import { Note, NoteService } from "../services/notes.service";
+import { GlobalContext } from "../context/NoteContext";
 
 export default function CreateNote() {
   const { register, handleSubmit, reset } = useForm();
+  const { addOne } = useContext(GlobalContext);
 
   const onSubmit = (data: Partial<Note>) => {
     const noteService = new NoteService();
@@ -11,7 +15,7 @@ export default function CreateNote() {
     reset({ title: "", description: "" });
 
     noteService.create(data)
-      .then(console.log)
+      .then(addOne)
       .catch(console.error);
   }
 
